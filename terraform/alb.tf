@@ -1,5 +1,5 @@
 resource "aws_alb" "this" {
-  name = "til-golang-alb"
+  name = "golang-terraform-alb"
   #tfsec:ignore:aws-elb-alb-not-public
   internal = false
   subnets = [

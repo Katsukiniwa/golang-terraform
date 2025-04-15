@@ -1,11 +1,10 @@
 provider "aws" {
-  region  = "ap-northeast-1"
-  profile = "katsukiniwa-admin"
+  region = "ap-northeast-1"
 }
 
 variable "env" {
   default = {
-    env_name     = "til_golang"
+    env_name     = "golang_terraform"
     vpc_cidr     = "10.1.0.0/16"
     sb_az1a      = "ap-northeast-1a"
     sb_az1a_cidr = "10.1.1.0/24"
@@ -115,7 +114,7 @@ resource "aws_ecs_cluster" "main" {
 }
 
 ### ECS TaskDefinition
-resource "aws_ecs_task_definition" "til_golang" {
+resource "aws_ecs_task_definition" "golang_terraform" {
   family                   = "${var.env.env_name}_app"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
@@ -127,8 +126,8 @@ resource "aws_ecs_task_definition" "til_golang" {
 
   container_definitions = jsonencode([
     {
-      name      = "til-golang"
-      image     = "175465510121.dkr.ecr.ap-northeast-1.amazonaws.com/til-golang:latest"
+      name      = "golang-terraform"
+      image     = "175465510121.dkr.ecr.ap-northeast-1.amazonaws.com/golang-terraform:latest"
       cpu       = 128
       memory    = 256
       essential = true
@@ -149,15 +148,15 @@ resource "aws_ecs_task_definition" "til_golang" {
 
   tags = {
     Environment = "Prod"
-    Service     = "til-golang"
+    Service     = "golang-terraform"
   }
 }
 
 ### ECS Service
-resource "aws_ecs_service" "til_golang" {
+resource "aws_ecs_service" "golang_terraform" {
   name            = "${var.env.env_name}_app"
   cluster         = aws_ecs_cluster.main.id
-  task_definition = aws_ecs_task_definition.til_golang.arn
+  task_definition = aws_ecs_task_definition.golang_terraform.arn
   desired_count   = 1
 
   network_configuration {
@@ -180,7 +179,7 @@ resource "aws_ecs_service" "til_golang" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.this.arn
-    container_name   = "til-golang"
+    container_name   = "golang-terraform"
     container_port   = 8080
   }
 }

@@ -94,7 +94,7 @@ func main() {
 	http.HandleFunc("/health", healthHandler)
 	http.HandleFunc("/time", timeHandler)
 	http.HandleFunc("/", rootHandler)
-	http.HandleFunc("/images", getBucketList)
+	http.HandleFunc("/buckets", getBucketList)
 
 	err := server.ListenAndServe()
 	if err != nil {

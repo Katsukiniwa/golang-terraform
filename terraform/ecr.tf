@@ -1,6 +1,6 @@
 #tfsec:ignore:aws-ecr-enforce-immutable-repository
-resource "aws_ecr_repository" "til_golang" {
-  name         = "til-golang"
+resource "aws_ecr_repository" "golang_terraform" {
+  name         = "golang-terraform"
   force_delete = true
 
   image_scanning_configuration {
@@ -9,12 +9,12 @@ resource "aws_ecr_repository" "til_golang" {
 
   encryption_configuration {
     encryption_type = "KMS"
-    kms_key         = aws_kms_key.til_golang.arn
+    kms_key         = aws_kms_key.golang_terraform.arn
   }
 }
 
 resource "aws_ecr_lifecycle_policy" "example" {
-  repository = aws_ecr_repository.til_golang.name
+  repository = aws_ecr_repository.golang_terraform.name
 
   policy = <<EOF
   {

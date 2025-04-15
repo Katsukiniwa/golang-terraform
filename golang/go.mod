@@ -5,7 +5,7 @@ go 1.23.0
 toolchain go1.24.2
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.32.5
+	github.com/aws/aws-sdk-go-v2 v1.36.3
 	github.com/golangci/golangci-lint v1.64.8
 )
 
@@ -228,7 +228,7 @@ require (
 require (
 	github.com/aws/aws-sdk-go-v2/config v1.28.5
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.69.0
-	github.com/aws/smithy-go v1.22.1 // indirect
+	github.com/aws/smithy-go v1.22.2 // indirect
 )
 
 tool github.com/golangci/golangci-lint/v2/cmd/golangci-lint

@@ -1,0 +1,38 @@
+services:
+  app:
+    container_name: app
+    build:
+      dockerfile_inline: |
+        FROM golang:1.23
+
+        WORKDIR /app
+
+        COPY . .
+
+        RUN apt-get update -y && \
+          apt-get install -y git vim curl make unzip && \
+          go mod download
+
+        RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | bash -s -- -b $(go env GOPATH)/bin
+
+        # aws cli v2 のインストール
+        # https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-linux.html
+        RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        RUN unzip awscliv2.zip
+        RUN ./aws/install
+
+        ARG CGO_ENABLED=0
+        ARG GOOS=linux
+        ARG GOARCH=amd64
+    command: air
+    volumes:
+      - .:/app
+    tty: true
+    stdin_open: true
+    ports:
+      - "8080:8080"
+    environment:
+      AWS_DEFAULT_REGION: ap-northeast-1
+      AWS_DEFAULT_OUTPUT: json
+    env_file:
+      - .env

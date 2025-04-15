@@ -15,7 +15,7 @@ services:
 
         RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | bash -s -- -b $(go env GOPATH)/bin
 
-        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.0.2
+        RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.0.2
 
         # aws cli v2 のインストール
         # https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-linux.html
